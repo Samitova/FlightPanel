@@ -62,7 +62,7 @@ namespace FlightPanel
         /// <summary>
         /// Display the main menu of the programm
         /// </summary>
-        static void DisplayMainMenu()
+        private static void DisplayMainMenu()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("\nMAIN MENU\n");
@@ -144,7 +144,7 @@ namespace FlightPanel
         /// <summary>
         /// Display the search menu of the programm
         /// </summary>
-        static void DisplaySearchMenu()
+        private static void DisplaySearchMenu()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("\nSEARCH THE FLIGHTS\n");
@@ -197,7 +197,7 @@ namespace FlightPanel
         /// <summary>
         /// Display the edit menu of the programm
         /// </summary>
-        static void DisplayEditMenu()
+        private static void DisplayEditMenu()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("\nEDIT THE FLIGHTS\n");
@@ -238,7 +238,7 @@ namespace FlightPanel
         /// <summary>
         /// Display the emergency menu of the programm
         /// </summary>
-        static void DisplayEmergencyMenu()
+        private static void DisplayEmergencyMenu()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("\nEMERGEMCY INFORMATION\n");
@@ -828,7 +828,7 @@ namespace FlightPanel
         /// <summary>
         /// Get flight information about departures
         /// </summary>
-        static void GetDepartureInformation()
+        private static void GetDepartureInformation()
         {
             string outputText = "\nSearching the departures\n\n".ToUpper();
             Console.WriteLine(outputText);
@@ -1059,7 +1059,7 @@ namespace FlightPanel
         /// <summary>
         /// Search and display the flights by the flight number
         /// </summary>
-        static void SearchFlightNumber()
+        private static void SearchFlightNumber()
         {
             Console.WriteLine("Enter the flight number");
             string number = Console.ReadLine().Trim();
@@ -1090,7 +1090,7 @@ namespace FlightPanel
         /// <summary>
         /// Search and display the flights by the arrival time
         /// </summary>
-        static void SearchFlightArrivalTime()
+        private static void SearchFlightArrivalTime()
         {
             DateTime date = DateTime.Now;
             bool parse = false;
@@ -1132,7 +1132,7 @@ namespace FlightPanel
         /// <summary>
         /// Search and display the flights by the departure time
         /// </summary>
-        static void SearchFlightDepartureTime()
+        private static void SearchFlightDepartureTime()
         {
             DateTime date = DateTime.Now;
             bool parse = false;
