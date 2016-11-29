@@ -1,0 +1,7 @@
+Airunes,T549,20.10.2016 12:30,20.10.2016 15:30,Kiev,Berlin,A,G1,Check_in
+TransAero,K49,20.10.2016 12:00,20.10.2016 21:30,Kiev,Berlin,B,G5,Departed
+OpenAir,T6,9.9.2016 10:10,9.9.2016 15:30,Paris,Kiev,A,1,Arrived
+Airunes,L149,9.9.2016 11:00,9.9.2016 14:30,Lvov,Kiev,A,G2,Expected
+MetroJet,S52,9.9.2016 10:20,9.9.2016 15:00,Melburn,Kiev,A,G5,Arrived
+MetroJet,R15G,20.10.2016 11:25,20.10.2016 15:30,Kiev,Lvov,B,G4,Canceled
+Airunes,V12,9.10.2016 14:00,9.10.2016 18:30,Berlin,Kiev,C,G2,Expected
