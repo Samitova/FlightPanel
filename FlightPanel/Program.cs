@@ -712,6 +712,12 @@ namespace FlightPanel
             return new Flight(airline, flightNumber, departDate, arrivDate, departure, arrival, terminal, gate, status);
         }
 
+        /// <summary>
+        /// Check user input information for enums
+        /// </summary>
+        /// <typeparam name="T"> Enum Type</typeparam>
+        /// <param name="value">Enum value</param>
+        /// <param name="paramName">Name of checked enum parametr</param>
         private static void CheckEnum <T> (out T value, string paramName) where T :struct
         {
             bool parse = false;
@@ -728,6 +734,11 @@ namespace FlightPanel
             } while (!parse);          
         }
 
+        /// <summary>
+        /// Check user input information for date
+        /// </summary>
+        /// <param name="value">Date</param>
+        /// <param name="paramName">Name of checked parametr</param>
         private static void CheckDate (out DateTime value, string paramName)
         {
             bool parse = false;
