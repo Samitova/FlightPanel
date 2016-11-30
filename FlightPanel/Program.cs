@@ -497,18 +497,7 @@ namespace FlightPanel
         private static FlightStatus GetNewStatus()
         {
             FlightStatus status = FlightStatus.Unknown;
-            bool parse = false;
-            while (!parse)
-            {
-                Console.WriteLine($"Enter new flight state ({string.Join(", ", Enum.GetNames(typeof(FlightStatus)))})");
-                parse = Enum.TryParse(Console.ReadLine().Trim(), out status);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid flight state. Try again.");
-                    Console.ResetColor();
-                }
-            }
+            CheckEnum(out status, "flight status");
             return status;
         }
 
@@ -518,19 +507,8 @@ namespace FlightPanel
         /// <returns>Gate</returns>
         private static Gates GetNewGate()
         {
-            bool parse = false;
             Gates gate = Gates.G1;
-            while (!parse)
-            {
-                Console.WriteLine($"Enter new gate ({string.Join(", ", Enum.GetNames(typeof(Gates)))})");
-                parse = Enum.TryParse(Console.ReadLine().Trim(), out gate);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid gate. Try again.");
-                    Console.ResetColor();
-                }
-            }
+            CheckEnum(out gate, "gate");
             return gate;
         }
 
@@ -540,19 +518,8 @@ namespace FlightPanel
         /// <returns>Terminal</returns>
         private static Terminals GetNewTerminal()
         {
-            bool parse = false;
             Terminals terminal = Terminals.A;
-            while (!parse)
-            {
-                Console.WriteLine($"Enter new terminal ({string.Join(", ", Enum.GetNames(typeof(Terminals)))})");
-                parse = Enum.TryParse(Console.ReadLine().Trim(), out terminal);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid terminal. Try again.");
-                    Console.ResetColor();
-                }
-            }
+            CheckEnum(out terminal, "terminal");
             return terminal;
         }
 
@@ -561,20 +528,9 @@ namespace FlightPanel
         /// </summary>
         /// <returns>Arrival port</returns>
         private static Cities GetNewArrivalPort()
-        {
-            bool parse = false;
+        {           
             Cities arrival = Cities.Berlin;
-            while (!parse)
-            {
-                Console.WriteLine($"Enter new arrival port ({string.Join(", ", Enum.GetNames(typeof(Cities)))})");
-                parse = Enum.TryParse(Console.ReadLine().Trim(), out arrival);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid departure port. Try again.");
-                    Console.ResetColor();
-                }
-            }
+            CheckEnum(out arrival, "arrival port");
             return arrival;
         }
 
@@ -584,19 +540,8 @@ namespace FlightPanel
         /// <returns>Departure port</returns>
         private static Cities GetNewDeparturePort()
         {
-            bool parse = false;
             Cities departure = Cities.Berlin;
-            while (!parse)
-            {
-                Console.WriteLine($"Enter new departure port ({string.Join(", ", Enum.GetNames(typeof(Cities)))})");
-                parse = Enum.TryParse(Console.ReadLine().Trim(), out departure);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid departure port. Try again.");
-                    Console.ResetColor();
-                }
-            }
+            CheckEnum(out departure, "departure port");
             return departure;
         }
 
@@ -606,19 +551,8 @@ namespace FlightPanel
         /// <returns>Arrival date</returns>
         private static DateTime GetNewArrivalDate()
         {
-            bool parse = false;
             DateTime arrivDate = DateTime.Now;
-            while (!parse)
-            {
-                Console.WriteLine("Enter flight arrival date in format dd.MM.yyyy HH:mm");
-                parse = DateTime.TryParse(Console.ReadLine(), out arrivDate);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid date. Try again.");
-                    Console.ResetColor();
-                }
-            }
+            CheckDate(out arrivDate, "arrival");
             return arrivDate;
         }
 
@@ -627,20 +561,9 @@ namespace FlightPanel
         /// </summary>
         /// <returns></returns>
         private static DateTime GetNewDepartureDate()
-        {
-            bool parse = false;
+        {            
             DateTime departDate = DateTime.Now;
-            while (!parse)
-            {
-                Console.WriteLine("Enter new flight departure date in format dd.MM.yyyy HH:mm");
-                parse = DateTime.TryParse(Console.ReadLine(), out departDate);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid date. Try again.");
-                    Console.ResetColor();
-                }
-            }
+            CheckDate(out departDate, "departure");          
             return departDate;
         }
 
@@ -660,19 +583,8 @@ namespace FlightPanel
         /// <returns>Airlines</returns>
         private static Airlines GetNewAirlines()
         {
-            bool parse = false;
             Airlines airline = Airlines.Airunes;
-            while (!parse)
-            {
-                Console.WriteLine($"Enter new airline ({string.Join(", ", Enum.GetNames(typeof(Airlines)))})");
-                parse = Enum.TryParse(Console.ReadLine().Trim(), out airline);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid airline. Try again.");
-                    Console.ResetColor();
-                }
-            }
+            CheckEnum(out airline, "airline");
             return airline;
         }
 
