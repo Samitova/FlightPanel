@@ -8,11 +8,52 @@ using System.IO;
 
 namespace FlightPanel
 {
-    enum FlightStatus { Check_in, Gate_closed, Arrived, Departed, Unknown, Canceled, Expected, Delayed, In_flight };
-    enum Cities { Rome, Paris, Berlin, Melburn, NewYork, Kiev, Lvov, Kharkov, London };
-    enum Airlines { OpenAir, MetroJet, Airunes, TransAero };
-    enum Gates { G1 = 1, G2, G3, G4, G5, G6 };
-    enum Terminals { A, B, C };
+    enum FlightStatus
+    {
+        Check_in,
+        Gate_closed,
+        Arrived,
+        Departed,
+        Unknown,
+        Canceled,
+        Expected,
+        Delayed,
+        In_flight
+    };
+    enum Cities
+    {
+        Rome,
+        Paris,
+        Berlin,
+        Melburn,
+        NewYork,
+        Kiev,
+        Lvov,
+        Kharkov,
+        London
+    };
+    enum Airlines
+    {
+        OpenAir,
+        MetroJet,
+        Airunes,
+        TransAero
+    };
+    enum Gates
+    {
+        G1 = 1,
+        G2,
+        G3,
+        G4,
+        G5,
+        G6
+    };
+    enum Terminals
+    {
+        A,
+        B,
+        C
+    };
 
     struct Flight
     {
@@ -42,18 +83,18 @@ namespace FlightPanel
 
         override public string ToString()
         {
-            string flightInformation = $"{Airline,-10} {FlightNumber,-12}{DeparturePort,-15}{ArrivalPort,-15}{DepartureDate.ToString("dd.MM"),-10}{DepartureDate.ToString("HH:mm"),-5}-{ArrivalDate.ToString("HH:mm"),-15}{Terminal,-10}{Gate,-10}{FlightStatus,-15}";
-            return flightInformation;
+            return $"{Airline,-10} {FlightNumber,-12}{DeparturePort,-15}{ArrivalPort,-15}{DepartureDate.ToString("dd.MM"),-10}{DepartureDate.ToString("HH:mm"),-5}-{ArrivalDate.ToString("HH:mm"),-15}{Terminal,-10}{Gate,-10}{FlightStatus,-15}";
         }
     }
 
     class Program
     {
         static Flight[] flights;
+        const string LOGFILE= "UserFlightInformation.txt", DATAFILE = "flights.txt";
 
         static void Main(string[] args)
         {
-            Console.SetWindowSize(150, 50);
+            Console.SetWindowSize(150, 50);            
             ClearLogFile();
             flights = LoadData();
             DisplayMainMenu();
@@ -270,24 +311,7 @@ namespace FlightPanel
                     DisplayEmergencyMenu();
                     break;
             }
-        }
-
-        /// <summary>
-        /// Display all flights
-        /// </summary>
-        private static void GetAllFlights()
-        {
-            string outputText = "\nAll flights\n\n".ToUpper();
-            Console.WriteLine(outputText);
-            DisplayFlightCaption();
-            foreach (Flight flight in flights)
-            {
-                Console.WriteLine(flight.ToString());
-                outputText += FormatOutputText(flight.ToString());
-            }
-            SaveData(outputText);
-            DisplayFlightInformationMenu();
-        }
+        }      
 
         /// <summary>
         /// Display fire emergency information
@@ -665,116 +689,59 @@ namespace FlightPanel
             Cities arrival = Cities.Berlin, departure = Cities.Berlin;
             Gates gate = Gates.G1;
             FlightStatus status = FlightStatus.Unknown;
-            bool parse = false;
-
-            while (!parse)
-            {
-                Console.WriteLine($"Enter the airline ({string.Join(", ", Enum.GetNames(typeof(Airlines)))})");
-                parse = Enum.TryParse(Console.ReadLine().Trim(), out airline);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid airline. Try again.");
-                    Console.ResetColor();
-                }
-            }
 
             Console.WriteLine("Enter the flight number");
             flightNumber = Console.ReadLine().Trim();
 
-            parse = false;
-            while (!parse)
-            {
-                Console.WriteLine("Enter flight departure date in format dd.MM.yyyy HH:mm");
-                parse = DateTime.TryParse(Console.ReadLine(), out departDate);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid date. Try again.");
-                    Console.ResetColor();
-                }
-            }
+            CheckEnum(out airline, "airline");
 
-            parse = false;
-            while (!parse)
-            {
-                Console.WriteLine("Enter flight arrival date in format dd.MM.yyyy HH:mm");
-                parse = DateTime.TryParse(Console.ReadLine(), out arrivDate);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid date. Try again.");
-                    Console.ResetColor();
-                }
-            }
+            CheckDate(out departDate, "departure");
 
-            parse = false;
-            string citiesInfo = string.Join(", ", Enum.GetNames(typeof(Cities)));
-            while (!parse)
-            {
-                Console.WriteLine("Enter the departure port ({0})", citiesInfo);
-                parse = Enum.TryParse(Console.ReadLine().Trim(), out departure);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid departure port. Try again.");
-                    Console.ResetColor();
-                }
-            }
+            CheckDate(out arrivDate, "arrival");    
+           
+            CheckEnum(out departure, "departure port");
+    
+            CheckEnum(out arrival, "arrival port");         
+    
+            CheckEnum(out terminal, "terminal");
+             
+            CheckEnum(out gate, "gate");
 
-            parse = false;
-            while (!parse)
-            {
-                Console.WriteLine("Enter the arrival port ({0})", citiesInfo);
-                parse = Enum.TryParse(Console.ReadLine().Trim(), out arrival);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid arrival port. Try again.");
-                    Console.ResetColor();
-                }
-            }
-
-            parse = false;
-            while (!parse)
-            {
-                Console.WriteLine($"Enter the terminal ({string.Join(", ", Enum.GetNames(typeof(Terminals)))})");
-                parse = Enum.TryParse(Console.ReadLine().Trim(), out terminal);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid terminal. Try again.");
-                    Console.ResetColor();
-                }
-            }
-
-            parse = false;
-            while (!parse)
-            {
-                Console.WriteLine($"Enter the gate ({string.Join(", ", Enum.GetNames(typeof(Gates)))})");
-                parse = Enum.TryParse(Console.ReadLine().Trim(), out gate);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid gate. Try again.");
-                    Console.ResetColor();
-                }
-            }
-
-            parse = false;
-            while (!parse)
-            {
-                Console.WriteLine($"Enter the flight status ({string.Join(", ", Enum.GetNames(typeof(FlightStatus)))})");
-                parse = Enum.TryParse(Console.ReadLine().Trim(), out status);
-                if (!parse)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid flight status. Try again.");
-                    Console.ResetColor();
-                }
-            }
+            CheckEnum(out status, "flight status");          
 
             return new Flight(airline, flightNumber, departDate, arrivDate, departure, arrival, terminal, gate, status);
+        }
+
+        private static void CheckEnum <T> (out T value, string paramName) where T :struct
+        {
+            bool parse = false;
+            Console.WriteLine($"Enter the {paramName} ({string.Join(", ", Enum.GetNames(typeof(T)))})");
+            do
+            {
+                parse = Enum.TryParse(Console.ReadLine().Trim(), out value);
+                if (!parse)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Invalid {paramName}. Try again.");
+                    Console.ResetColor();
+                }
+            } while (!parse);          
+        }
+
+        private static void CheckDate (out DateTime value, string paramName)
+        {
+            bool parse = false;
+            Console.WriteLine($"Enter flight {paramName} date in format dd.MM.yyyy HH:mm");
+            do
+            {
+                parse = DateTime.TryParse(Console.ReadLine(), out value);
+                if (!parse)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Invalid date. Try again.");
+                    Console.ResetColor();
+                }
+            } while (!parse);
         }
 
         /// <summary>
@@ -799,11 +766,28 @@ namespace FlightPanel
         }
 
         /// <summary>
+        /// Display all flights
+        /// </summary>
+        private static void GetAllFlights()
+        {
+            string outputText = "\nALL FLIGHTS\n";
+            Console.WriteLine(outputText);
+            DisplayFlightCaption();
+            foreach (Flight flight in flights)
+            {
+                Console.WriteLine(flight.ToString());
+                outputText += FormatOutputText(flight.ToString());
+            }
+            SaveData(outputText);
+            DisplayFlightInformationMenu();
+        }
+
+        /// <summary>
         /// Get flight information about arrivals
         /// </summary>
         private static void GetArrivalsInformation()
         {
-            string outputText = "\nSearching the arrivals\n\n".ToUpper();
+            string outputText = "\nSEARCHING THE ARRIVALS\n";
             Console.WriteLine(outputText);
             DisplayFlightCaption();
             bool isFlightFound = false;
@@ -830,7 +814,7 @@ namespace FlightPanel
         /// </summary>
         private static void GetDepartureInformation()
         {
-            string outputText = "\nSearching the departures\n\n".ToUpper();
+            string outputText = "\nSEARCHING THE DEPARTURES\n";
             Console.WriteLine(outputText);
             DisplayFlightCaption();
             bool isFlightFound = false;
@@ -1063,7 +1047,7 @@ namespace FlightPanel
         {
             Console.WriteLine("Enter the flight number");
             string number = Console.ReadLine().Trim();
-            string outputText = $"\nSearching the flight with number {number}\n".ToUpper();
+            string outputText = $"\nSEARCHING THE FLIGHT WITH NUMBER {number}\n";
             Console.WriteLine(outputText);
             DisplayFlightCaption();
             bool isFlightFound = false;
@@ -1105,7 +1089,7 @@ namespace FlightPanel
                     Console.ResetColor();
                 }
             }
-            string outputText = $"\nSearching the flights with arrival date {date}\n".ToUpper();
+            string outputText = $"\nSEARCHING THE FLIGHTS WITH ARRIVAL DATE {date}\n";
             Console.WriteLine(outputText);
             DisplayFlightCaption();
             bool isFlightFound = false;
@@ -1147,7 +1131,7 @@ namespace FlightPanel
                     Console.ResetColor();
                 }
             }
-            string outputText = $"\nSearching the flights with departure date {date}\n".ToUpper();
+            string outputText = $"\nSEARCHING THE FLIGHTS WITH DEPARTURE DATE {date}\n";
             Console.WriteLine(outputText);
             DisplayFlightCaption();
             bool isFlightFound = false;
@@ -1180,33 +1164,22 @@ namespace FlightPanel
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("LOADING DATA FROM FILE\n");
             Flight[] flights = null;
+            string[] data = null;
             try
             {
-                using (StreamReader reader = new StreamReader("flights.txt"))
-                {
-                    string text = null;
-                    string[] data = new string[4];
-                    int count = 0;
-                    while ((text = reader.ReadLine()) != null)
-                    {
-                        if (count == data.Length - 1)
-                        {
-                            Array.Resize(ref data, data.Length * 2);
-                        }
-                        data[count++] = text;
-                    }
-                    flights = new Flight[count];
-                    for (int i = 0; i < count; i++)
-                    {
-                        flights[i] = ParseFlight(data[i]);
-                    }
-                }
+                data = File.ReadAllLines(DATAFILE);                            
             }
             catch (IOException ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ex.Message);
                 Console.ResetColor();
+            }
+
+            flights = new Flight[data.Length];
+            for (int i = 0; i < flights.Length; i++)
+            {
+                flights[i] = ParseFlight(data[i]);
             }
             return flights;
         }
@@ -1266,7 +1239,7 @@ namespace FlightPanel
         {
             try
             {
-                File.AppendAllText("UserFlightInformation.txt", data);
+                File.AppendAllText(LOGFILE, data);
             }
             catch (IOException ex)
             {
